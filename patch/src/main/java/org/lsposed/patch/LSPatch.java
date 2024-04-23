@@ -226,7 +226,7 @@ public class LSPatch {
                 var pair = ManifestParser.parseManifestFile(is);
                 if (pair == null)
                     throw new PatchError("Failed to parse AndroidManifest.xml");
-                appComponentFactory = pair.appComponentFactory;
+                appComponentFactory = pair.appComponentFactory.startsWith(".")?pair.packageName+ pair.appComponentFactory:pair.appComponentFactory;
                 minSdkVersion = pair.minSdkVersion;
                 logger.d("original appComponentFactory class: " + appComponentFactory);
                 logger.d("original minSdkVersion: " + minSdkVersion);
