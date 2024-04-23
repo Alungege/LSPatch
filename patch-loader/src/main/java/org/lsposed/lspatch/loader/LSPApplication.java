@@ -169,8 +169,12 @@ public class LSPApplication {
                 try {
                     context.getClassLoader().loadClass(config.appComponentFactory);
                 } catch (ClassNotFoundException e) { // This will happen on some strange shells like 360
-                    Log.w(TAG, "Original AppComponentFactory not found: " + config.appComponentFactory);
-                    appInfo.appComponentFactory = null;
+                    try{
+                        appLoadedApk.getClassLoader().loadClass(appLoadedApk.getApplicationInfo().appComponentFactory);
+                    }catch (ClassNotFoundException ignore){
+                        Log.w(TAG, "Original AppComponentFactory not found: " + config.appComponentFactory);
+                        appInfo.appComponentFactory = null;
+                    }
                 }
             }
             return context;
